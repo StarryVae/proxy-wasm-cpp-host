@@ -20,6 +20,7 @@
 #include "include/proxy-wasm/context.h"
 #include "include/proxy-wasm/wasm_vm.h"
 #include "include/proxy-wasm/word.h"
+#include "wasm-api/wasm.hh"
 
 namespace proxy_wasm {
 
@@ -88,6 +89,7 @@ Word resolve_shared_queue(Word vm_id_ptr, Word vm_id_size, Word queue_name_ptr,
 Word dequeue_shared_queue(Word token, Word data_ptr_ptr, Word data_size_ptr);
 Word enqueue_shared_queue(Word token, Word data_ptr, Word data_size);
 Word get_buffer_bytes(Word type, Word start, Word length, Word ptr_ptr, Word size_ptr);
+Word get_buffer_bytes_new(Word type, Word start, Word length, wasm::Ref ptr, wasm::Ref size);
 Word get_buffer_status(Word type, Word length_ptr, Word flags_ptr);
 Word set_buffer_bytes(Word type, Word start, Word length, Word data_ptr, Word data_size);
 Word add_header_map_value(Word type, Word key_ptr, Word key_size, Word value_ptr, Word value_size);
@@ -163,7 +165,7 @@ void emscripten_notify_memory_growth(Word);
                                   _f(get_current_time_nanoseconds) _f(define_metric)               \
                                       _f(increment_metric) _f(record_metric) _f(get_metric)        \
                                           _f(set_effective_context) _f(done)                       \
-                                              _f(call_foreign_function)
+                                              _f(call_foreign_function) _f(get_buffer_bytes_new)
 
 #define FOR_ALL_HOST_FUNCTIONS_ABI_SPECIFIC(_f)                                                    \
   _f(get_configuration) _f(continue_request) _f(continue_response) _f(clear_route_cache)           \

@@ -43,6 +43,7 @@ cc_library(
     ],
     deps = [
         "@proxy_wasm_cpp_sdk//:common_lib",
+        "//external:wee8",
     ],
 )
 
@@ -86,6 +87,7 @@ cc_library(
     }),
     deps = [
         ":headers",
+        "//external:wee8",
     ] + select({
         "//bazel:crypto_system": [],
         "//conditions:default": ["@boringssl//:crypto"],

@@ -17,6 +17,7 @@
 #include "include/proxy-wasm/pairs_util.h"
 #include "include/proxy-wasm/wasm.h"
 
+#include <cstddef>
 #include <openssl/rand.h>
 
 #include <utility>
@@ -470,6 +471,29 @@ Word get_buffer_bytes(Word type, Word start, Word length, Word ptr_ptr, Word siz
     return WasmResult::Ok;
   }
   return buffer->copyTo(context->wasm(), start, length, ptr_ptr, size_ptr);
+}
+
+Word get_buffer_bytes_new(Word type, Word start, Word length, const char **ptr_ptr,
+                          size_t *size_ptr) {
+  if (type > static_cast<uint64_t>(WasmBufferType::MAX)) {
+    return WasmResult::BadArgument;
+  }
+  auto *context = contextOrEffectiveContext();
+  auto *buffer = context->getBuffer(static_cast<WasmBufferType>(type.u64_));
+  if (buffer == nullptr) {
+    return WasmResult::NotFound;
+  }
+  // Check for overflow.
+  if (start > start + length) {
+    return WasmResult::BadArgument;
+  }
+  // Don't overread.
+  if (start > buffer->size()) {
+    length = 0;
+  } else if (start + length > buffer->size()) {
+    length = buffer->size() - start;
+  }
+  return buffer->copyToNew(context->wasm(), start, length, ptr_ptr, size_ptr);
 }
 
 Word get_buffer_status(Word type, Word length_ptr, Word flags_ptr) {

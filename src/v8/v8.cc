@@ -234,6 +234,7 @@ template <> constexpr auto convertArgToValKind<uint32_t>() { return wasm::I32; }
 template <> constexpr auto convertArgToValKind<int64_t>() { return wasm::I64; };
 template <> constexpr auto convertArgToValKind<uint64_t>() { return wasm::I64; };
 template <> constexpr auto convertArgToValKind<double>() { return wasm::F64; };
+template <> constexpr auto convertArgToValKind<wasm::Ref>() { return wasm::ANYREF; };
 
 template <typename T, std::size_t... I>
 constexpr auto convertArgsTupleToValTypesImpl(std::index_sequence<I...> /*comptime*/) {

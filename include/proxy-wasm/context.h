@@ -87,6 +87,8 @@ struct BufferBase : public BufferInterface {
   }
   WasmResult copyTo(WasmBase *wasm, size_t start, size_t length, uint64_t ptr_ptr,
                     uint64_t size_ptr) const override;
+  WasmResult copyToNew(WasmBase *wasm, size_t start, size_t length, const char **ptr_ptr,
+                       size_t *size_ptr) const override;
   WasmResult copyFrom(size_t /* start */, size_t /* length */,
                       std::string_view /* data */) override {
     // Setting a string buffer not supported (no use case).

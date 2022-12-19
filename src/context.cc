@@ -66,6 +66,10 @@ WasmResult BufferBase::copyTo(WasmBase *wasm, size_t start, size_t length, uint6
   return WasmResult::Ok;
 }
 
+WasmResult BufferBase::copyToNew(WasmBase *, size_t, size_t, const char **, size_t *) const {
+  return WasmResult::Ok;
+}
+
 // Test support.
 uint32_t resolveQueueForTest(std::string_view vm_id, std::string_view queue_name) {
   return getGlobalSharedQueue().resolveQueue(vm_id, queue_name);

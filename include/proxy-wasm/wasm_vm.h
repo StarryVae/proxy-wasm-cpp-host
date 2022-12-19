@@ -24,6 +24,7 @@
 #include <vector>
 
 #include "include/proxy-wasm/word.h"
+#include "wasm-api/wasm.hh"
 
 namespace proxy_wasm {
 
@@ -114,6 +115,7 @@ using WasmCallback_WWmW = Word (*)(Word, uint64_t, Word);
 using WasmCallback_WWWWWWllWW = Word (*)(Word, Word, Word, Word, Word, int64_t, int64_t, Word,
                                          Word);
 using WasmCallback_dd = double (*)(double);
+using WasmCallback_TEST = Word (*)(Word, Word, Word, wasm::Ref, wasm::Ref);
 
 #define FOR_ALL_WASM_VM_IMPORTS(_f)                                                                \
   _f(proxy_wasm::WasmCallbackVoid<0>) _f(proxy_wasm::WasmCallbackVoid<1>)                          \
@@ -121,17 +123,17 @@ using WasmCallback_dd = double (*)(double);
           _f(proxy_wasm::WasmCallbackVoid<4>) _f(proxy_wasm::WasmCallbackWord<0>)                  \
               _f(proxy_wasm::WasmCallbackWord<1>) _f(proxy_wasm::WasmCallbackWord<2>)              \
                   _f(proxy_wasm::WasmCallbackWord<3>) _f(proxy_wasm::WasmCallbackWord<4>)          \
-                      _f(proxy_wasm::WasmCallbackWord<5>) _f(proxy_wasm::WasmCallbackWord<6>)      \
-                          _f(proxy_wasm::WasmCallbackWord<7>) _f(proxy_wasm::WasmCallbackWord<8>)  \
-                              _f(proxy_wasm::WasmCallbackWord<9>)                                  \
-                                  _f(proxy_wasm::WasmCallbackWord<10>)                             \
-                                      _f(proxy_wasm::WasmCallbackWord<12>)                         \
-                                          _f(proxy_wasm::WasmCallback_WWl)                         \
-                                              _f(proxy_wasm::WasmCallback_WWlWW)                   \
-                                                  _f(proxy_wasm::WasmCallback_WWm)                 \
-                                                      _f(proxy_wasm::WasmCallback_WWmW)            \
-                                                          _f(proxy_wasm::WasmCallback_WWWWWWllWW)  \
-                                                              _f(proxy_wasm::WasmCallback_dd)
+                      _f(proxy_wasm::WasmCallbackWord<5>) _f(proxy_wasm::WasmCallbackWord<6>) _f(  \
+                          proxy_wasm::WasmCallbackWord<7>) _f(proxy_wasm::WasmCallbackWord<8>)     \
+                          _f(proxy_wasm::WasmCallbackWord<9>) _f(proxy_wasm::WasmCallbackWord<10>) \
+                              _f(proxy_wasm::WasmCallbackWord<12>)                                 \
+                                  _f(proxy_wasm::WasmCallback_WWl)                                 \
+                                      _f(proxy_wasm::WasmCallback_WWlWW)                           \
+                                          _f(proxy_wasm::WasmCallback_WWm)                         \
+                                              _f(proxy_wasm::WasmCallback_WWmW)                    \
+                                                  _f(proxy_wasm::WasmCallback_WWWWWWllWW)          \
+                                                      _f(proxy_wasm::WasmCallback_dd)              \
+                                                          _f(proxy_wasm::WasmCallback_TEST)
 
 enum class Cloneable {
   NotCloneable,      // VMs can not be cloned and should be created from scratch.

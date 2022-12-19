@@ -71,6 +71,8 @@ struct BufferInterface {
    */
   virtual WasmResult copyTo(WasmBase *wasm, size_t start, size_t length, uint64_t ptr_ptr,
                             uint64_t size_ptr) const = 0;
+  virtual WasmResult copyToNew(WasmBase *wasm, size_t start, size_t length, const char **ptr_ptr,
+                               size_t *size_ptr) const = 0;
 
   /**
    * Copy (alias) bytes from the VM 'data' into the buffer, replacing the provided range..

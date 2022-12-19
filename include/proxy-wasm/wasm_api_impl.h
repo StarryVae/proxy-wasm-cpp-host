@@ -154,7 +154,7 @@ inline WasmResult proxy_enqueue_shared_queue(uint32_t token, const char *data_pt
 inline WasmResult proxy_get_buffer_bytes(WasmBufferType type, uint64_t start, uint64_t length,
                                          const char **ptr, size_t *size) {
   return wordToWasmResult(
-      exports::get_buffer_bytes(WS(type), WS(start), WS(length), WR(ptr), WR(size)));
+      exports::get_buffer_bytes_new(WS(type), WS(start), WS(length), ptr, size));
 }
 
 inline WasmResult proxy_get_buffer_status(WasmBufferType type, size_t *length_ptr,
